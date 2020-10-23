@@ -1,19 +1,13 @@
 import java.util.Scanner;
 
 public class StringCalculatorMain {
-    static int getFistValue(Scanner sc) {
-        System.out.println("first operand: ");
-        return sc.nextInt();
+    static String[] inputStatement(Scanner sc) {
+        String inputStream = sc.nextLine();
+        return inputStream.split(" ");
     }
 
-    static int getSecondVal(Scanner sc) {
-        System.out.println("second operand: ");
-        return sc.nextInt();
-    }
-
-    static String getSymbol(Scanner sc) {
-        System.out.println("operator: ");
-        return sc.next();
+    static int getOperand(String operand) {
+        return Integer.parseInt(operand);
     }
 
     static int calculate(String symbol, int first, int second) {
@@ -21,19 +15,15 @@ public class StringCalculatorMain {
         switch (symbol) {
             case "+":
                 result = first + second;
-                System.out.println("add: " + result);
                 break;
             case "-":
                 result = first - second;
-                System.out.println("sub: " + result);
                 break;
             case "*":
                 result = first * second;
-                System.out.println("mul: " + result);
                 break;
             case "/":
                 result = first / second;
-                System.out.println("div: " + result);
                 break;
 
             default:
@@ -41,23 +31,23 @@ public class StringCalculatorMain {
         }
         return result;
     }
+    static void print(int result) {
+        System.out.println("result: " + result);
+    }
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         System.out.println("Keep calculate");
 
-        int result = getFistValue(sc);
-
-        while (true) {
-            String symbol = getSymbol(sc);
-            if (symbol.equals("quit")) {
-                break;
-            }
-            int second = getSecondVal(sc);
+        String[] values = inputStatement(sc);
+        int i = 0;
+        int result = getOperand(values[i++]);
+        do {
+            String symbol = values[i++];
+            int second = getOperand(values[i++]);
             result = calculate(symbol, result, second);
-
-            System.out.println(result);
-        }
+        } while (i < values.length);
+        print(result);
         sc.close();
     }
 }
